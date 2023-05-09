@@ -2,6 +2,7 @@ package com.my;
 
 import com.my.entities.Token;
 import com.my.entities.enums.TokenType;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.util.*;
 
 public class Main {
     private static final String ANSI_RESET = "\u001B[0m";
+    @Getter
+    private static List<Token> tokens = new ArrayList<>();
+
 
     public static void main(String[] args) {
         String input;
@@ -29,12 +33,15 @@ public class Main {
         }
 
         JavaScriptLexer lexer = new JavaScriptLexer(input);
+
         printSequence(lexer);
     }
 
     private static void printHighlightedTokens(JavaScriptLexer lexer){
+        tokens = new ArrayList<>();
         while (lexer.hasNextToken()) {
             Token token = lexer.nextToken();
+            tokens.add(token);
             System.out.println(token.getType().getColor() + token.getType() + ": " + token.getValue() + ANSI_RESET);
         }
     }
@@ -57,9 +64,10 @@ public class Main {
     }
 
     private static void printSequence(JavaScriptLexer lexer) {
-
+        tokens = new ArrayList<>();
         while (lexer.hasNextToken()) {
             Token token = lexer.nextToken();
+            tokens.add(token);
             System.out.println(token.getType() + ": " + token.getValue());
 
         }
