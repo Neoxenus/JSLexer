@@ -13,7 +13,7 @@ import static com.my.constants.RegExes.*;
 public class JavaScriptLexer {
 
     // Define regular expressions for tokens
-    private static final Map<TokenType, String> REG_EX = new HashMap<TokenType, String>();
+    private static final Map<TokenType, String> REG_EX = new HashMap<>();
     static {
         REG_EX.put(TokenType.COMMENT, COMMENT);
         REG_EX.put(TokenType.KEYWORD, KEYWORD);
@@ -37,11 +37,9 @@ public class JavaScriptLexer {
                     "|(" + PUNCTUATION + ")" +
                     "|(.+)"
     );
-    private String input;
-    private Matcher matcher;
+    private final Matcher matcher;
 
     public JavaScriptLexer(String input) {
-        this.input = input;
         this.matcher = TOKEN_PATTERN.matcher(input);
     }
 

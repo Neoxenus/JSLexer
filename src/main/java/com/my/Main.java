@@ -1,7 +1,6 @@
 package com.my;
 
 import com.my.entities.Token;
-import com.my.entities.enums.TokenType;
 import lombok.Getter;
 
 import java.io.File;
@@ -12,10 +11,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class Main {
-    private static final String ANSI_RESET = "\u001B[0m";
     @Getter
     private static List<Token> tokens = new ArrayList<>();
 
@@ -37,38 +37,12 @@ public class Main {
         printSequence(lexer);
     }
 
-    private static void printHighlightedTokens(JavaScriptLexer lexer){
-        tokens = new ArrayList<>();
-        while (lexer.hasNextToken()) {
-            Token token = lexer.nextToken();
-            tokens.add(token);
-            System.out.println(token.getType().getColor() + token.getType() + ": " + token.getValue() + ANSI_RESET);
-        }
-    }
-
-    private static void printSortedTokens(JavaScriptLexer lexer) {
-
-        Map<TokenType, List<Token>> sortedMap = new TreeMap<>();
-
-        while (lexer.hasNextToken()) {
-            Token token = lexer.nextToken();
-            sortedMap.computeIfAbsent(token.getType(), k -> new ArrayList<>())
-                    .add(token);
-        }
-
-        sortedMap.forEach((type, tokens) -> {
-            System.out.println(type + ":");
-            tokens.forEach(token -> System.out.println("  " + token.getValue()));
-        });
-
-    }
-
     private static void printSequence(JavaScriptLexer lexer) {
         tokens = new ArrayList<>();
         while (lexer.hasNextToken()) {
             Token token = lexer.nextToken();
             tokens.add(token);
-            System.out.println(token.getType() + ": " + token.getValue());
+            System.out.println(token);
 
         }
     }
